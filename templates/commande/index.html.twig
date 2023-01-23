@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommandeController!{% endblock %}
+
+{% block body %}
+<h2>Commande numéro : {{ commande.id }}</h2>
+<p>Date de commande: {{ commande.dateCommande|date }}</p>
+<p>Utilisateur: {{ commande.user.username }}</p>
+
+<h3>Produits de la commande</h3>
+<ul>
+    {% for produit in produits %}
+        <li>{{ produit.produit.nomProduit }} - Quantité: {{ produit.quantite }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,77 @@
+<header>
+  <!-- Sidebar -->
+    
+<div class="imgHeader"></div>
+    <!-- Sidebar -->
+    <!-- Navbar -->
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+        <!-- Brand -->
+        {% if app.user %}
+          <a class="navbar-brand" href="/">
+            <img src="{{ app.user.image }}" height="50" alt="MDB Logo" loading="lazy" />
+          </a>
+        {% else %}
+          <a class="navbar-brand" href="/">
+            <img src="{{ asset('img/global/logo.png') }}" height="50" alt="MDB Logo" loading="lazy" />
+          </a>
+        {% endif %}
+        <!-- Search form -->
+        <form class="d-none d-md-flex input-group w-auto my-auto">
+          <input autocomplete="off" type="search" class="form-control rounded" placeholder='Search (ctrl + "/" to focus)' style="min-width: 225px;" />
+          <span class="input-group-text border-0">
+            <i class="fas fa-search"></i>
+          </span>
+        </form>
+        <h1 id="msgBvn">
+          Bienvenue chez Shoes Island 
+                  
+          {% if app.user %}
+            {{ app.user.nom }}
+            , 
+            {{ app.user.prenom }}
+          {% endif %}
+          ! 
+        </h1>
+        <!-- Right links -->
+        <ul class="navbar-nav ms-auto d-flex flex-row">
+          <!-- Notification dropdown -->
+          {% if app.user %}
+          <li class="nav-item dropdown">
+            <a class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user-alt "></i>
+              <span></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                <li>
+                  <a class="dropdown-item" href="/logout">
+                    Déconnexion
+                  </a>
+                </li>
+            </ul>
+          </li>
+        {% endif %}
+          <!-- Icon shopping -->
+          <a href="/panier" class="list-group-item list-group-item-action py-2 ripple">
+            <i class="fas fa-shopping-cart "></i>
+            <span class="badge rounded-pill badge-notification bg-danger">
+              {% set total = 0 %}
+              {% for item in panier %}
+                {% set total = total + item.quantite %}
+              {% endfor %}
+              {{ total }}
+            </span>
+          </a>
+        <!-- Container wrapper -->
+        </nav>
+      </div>
+      <!-- Navbar -->
+      </header>
+      <!--Main Navigation-->
+      <!--Main layout-->
+      <!--Main layout-->

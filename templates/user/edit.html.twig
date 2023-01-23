@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{app.user.nom}}  {{app.user.prenom}}{% endblock %}
+
+{% block body %}
+{# Breadcrump #}
+
+
+
+{# body #}
+<main class="my-5">
+<section>
+  <div class="divGauche">
+    <a href="/" class="" aria-current="false">
+      <i class="fas fa-home"></i>
+      <span>
+        Acceuil
+      </span>
+    </a>
+    {% if app.user %}
+      <a href="/profile" class="">
+        <i class="fas fa-users fa-fw me-3"></i>
+        <span>
+          Votre profil
+        </span>
+      </a>
+      <a href="#" class="">
+        <i class="fas fa-chart-bar fa-fw me-3"></i>
+        <span>
+          Vos commandes
+        </span>
+      </a>
+    {% endif %}
+    {% if is_granted("ROLE_ADMIN") %}
+      <a href="/admin" class="">
+        <i class="fas fa-chart-bar fa-fw me-3"></i>
+        <span>
+          Votre pannel admin
+        </span>
+      </a>
+    {% endif %}
+    {% if is_granted("ROLE_FOURNISSEUR") %}
+      <a href="#" class="">
+        <i class="fas fa-chart-bar fa-fw me-3"></i>
+        <span>
+          Votre pannel fournisseur
+        </span>
+      </a>
+    {% endif %}
+</div>
+</section>
+    <div class="container">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="/profile">Profile</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Modification du profil</li>
+  </ol>
+</nav>
+      <!--Section: Content-->
+      <section class="text-center text-md-start">
+        <h4 class="mb-5"><strong>Modification du profil de {{app.user.nom}} {{app.user.prenom}}</strong></h4>
+           {{ form_start(form) }}
+        <fieldset class="">
+            <legend>Mon identité</legend>
+            {{ form_row(form.nom) }}
+            {{ form_row(form.prenom) }}
+            {{ form_row(form.telephone) }}
+            {{ form_row(form.image) }}
+        </fieldset>
+        <hr>
+        <fieldset class="">
+            <legend>Mes coordonées</legend>
+            {{ form_row(form.adresse1) }}
+            {{ form_row(form.adresse2) }}
+            {{ form_row(form.adresse3) }}
+            {{ form_row(form.ville) }}
+            {{ form_row(form.pays) }}
+            {{ form_row(form.codePostal) }}
+        </fieldset>
+
+        <button type="submit" class="btn btn-success my-3">Modifier mes informations </button>
+    {{ form_end(form) }}
+
+    </section>
+    </div>
+    </main>
+{% endblock %}

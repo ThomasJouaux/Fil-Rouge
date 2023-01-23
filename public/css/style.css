@@ -1,0 +1,76 @@
+
+#msgBvn {
+    font-family: 'Dancing Script', cursive;
+    margin-left: 2rem;
+    color: #34495E;
+
+}
+
+main {
+    background-color: #FFFCFB;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    max-height: 100vh;
+    max-width: 100vw;
+    object-fit: cover;
+
+}
+
+.imgCategorie {
+    width: fit-content !important;
+}
+
+.imgHeader {
+    
+    max-width: 100vw;
+   
+    background-image:
+        url("/img/global/img_header.jpeg");
+    min-height: 60vh;
+    /* background-position: 50% 80%; */
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    opacity: 0.95;
+    background-attachment: fixed;
+
+
+}
+
+.header {
+   
+    display: flex;
+    width: 100vw;
+}
+
+.header ul {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    list-style: none;
+}
+
+.imgProduit {
+    min-width: 150px;
+    min-height: 300px;
+
+}
+
+.divGauche {
+    background-color: #FFFCFB;
+    min-height: 100vh;
+    min-width: 15vw;
+    position: static;
+
+
+}
+
+.spanDivGauche {
+    margin-top: 5%;
+    width: 100%;
+    background-color: #34495E;
+    color: #FFFCFB;
+}
+
+.divPage {}

@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+  {# breadCrump  #}
+  <main class="my-5">
+  <div class="divGauche">
+      <a href="/" class="" aria-current="false">
+        <span class=" btn  spanDivGauche">
+          <i class="fas fa-home"></i>
+          Acceuil
+                      
+        </span>
+      </a>
+      {% if app.user %}
+        <a href="/profile" class="">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-users fa-fw me-3"></i>
+            Votre profil
+                          
+          </span>
+        </a>
+        <a href="#" class="">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-chart-bar fa-fw me-3"></i>
+            Vos commandes
+                          
+          </span>
+        </a>
+      {% else %}
+        <a href="/login">
+          <span class="btn btn-success mt-4 col-8">
+        <i class="fas fa-plug"></i>
+            Connexion
+                        
+          </span>
+        </a>
+      </br>
+        <a href="/inscription">
+          Vous n'avez pas de compte ? Inscrivez vous 
+        </a>
+      {% endif %}
+      {% if is_granted("ROLE_ADMIN") %}
+        <a href="/admin" class="">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-chart-bar fa-fw me-3"></i>
+            Votre pannel admin
+                          
+          </span>
+        </a>
+      {% endif %}
+      {% if is_granted("ROLE_FOURNISSEUR") %}
+        <a href="#">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-chart-bar fa-fw me-3"></i>
+            Votre pannel fournisseur
+                          
+          </span>
+        </a>
+      {% endif %}
+    </div>
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            <a href="/">
+              Acceuil
+            </a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="/categorie/{id}">
+              Catégorie
+            </a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Produits
+          </li>
+        </ol>
+      </nav>
+      <!--Section: Content-->
+      <section class="text-center text-md-start">
+        <h4 class="mb-5">
+          <strong>
+            Nos chaussures :
+          </strong>
+        </h4>
+        {% for pro in liste %}
+          <div class="row">
+            <div class="col-md-4 mb-4">
+              <div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">
+                <img src="{{ pro.ImgProduit }}" class="img-fluid" />
+                <a href="#!">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-8 mb-4">
+              <h5>
+                {{ pro.nomProduit }}
+              </h5>
+              <p>
+                {{ pro.descriptionProduit }}
+              </p>
+              <a href="/add/{{ pro.id }}">
+                <i class="fas fa-shopping-cart"></i>
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </main>
+  <!--Main layout-->
+  {% endblock %}
+  

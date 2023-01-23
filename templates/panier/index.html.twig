@@ -1,0 +1,216 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+  Hello PanierController!
+  
+{% endblock %}
+{% block stylesheets %}
+  <link rel="stylesheet" href="/css/panier.css">
+  {# {{ encore_entry_link_tags('app') }} #}
+  {% endblock %}
+  {% block body %}
+    {# BreadCrump #}
+    <section class="h-100 h-custom" style="background-color: #d2c9ff;">
+      <main class="">
+      <div class="divGauche">
+      <a href="/" class="" aria-current="false">
+        <span class=" btn  spanDivGauche">
+          <i class="fas fa-home"></i>
+          Acceuil
+                      
+        </span>
+      </a>
+      {% if app.user %}
+        <a href="/profile" class="">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-users fa-fw me-3"></i>
+            Votre profil
+                          
+          </span>
+        </a>
+        <a href="#" class="">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-chart-bar fa-fw me-3"></i>
+            Vos commandes
+                          
+          </span>
+        </a>
+      {% else %}
+        <a href="/login">
+          <span class="btn btn-success mt-4 col-8">
+        <i class="fas fa-plug"></i>
+            Connexion
+                        
+          </span>
+        </a>
+      </br>
+        <a href="/inscription">
+          Vous n'avez pas de compte ? Inscrivez vous 
+        </a>
+      {% endif %}
+      {% if is_granted("ROLE_ADMIN") %}
+        <a href="/admin" class="">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-chart-bar fa-fw me-3"></i>
+            Votre pannel admin
+                          
+          </span>
+        </a>
+      {% endif %}
+      {% if is_granted("ROLE_FOURNISSEUR") %}
+        <a href="#">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-chart-bar fa-fw me-3"></i>
+            Votre pannel fournisseur
+                          
+          </span>
+        </a>
+      {% endif %}
+    </div>
+        <div class="container">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="/">
+                  Acceuil
+                </a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="/categorie/{id}">
+                  Catégorie
+                </a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="/produits/{id}">
+                  Produits
+                </a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Panier
+              </li>
+            </ol>
+          </nav>
+          <div class="row d-flex justify-content-center align-items-center ">
+            <div class="col-12">
+              <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                <div class="card-body p-0">
+                  <div class="row g-0">
+                    <div class="col-lg-8">
+                      <div class="p-5">
+                        <div class="d-flex justify-content-between align-items-center mb-5">
+                          <h1 class="fw-bold mb-0 text-black">
+                            Panier !
+                          </h1>
+                          <h6 class="mb-0 text-muted">
+                            {% set qte = 0 %}
+                            {% for item in panier %}
+                              {% set qte = qte + item.quantite %}
+                            {% endfor %}
+                            {{ qte }}
+                          </h6>
+                        </div>
+                        <hr class="my-4">
+                          {% for pro in panier %}
+                            <div class="row mb-4 d-flex justify-content-between align-items-center">
+                              <div class="col-md-2 col-lg-2 col-xl-2">
+                                <img src="{{ pro.ImgProduit }}" class="img-fluid rounded-3" alt="Cotton T-shirt"></div>
+                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                  <h6 class="text-muted">
+                                    {{ pro.NomProduit }}
+                                  </h6>
+                                  <h6 class="text-black mb-0">
+                                    {{ pro.TypeProduit }}
+                                  </h6>
+                                  <h6 class="text-black mb-0">
+                                    {{ pro.CouleurProduit }}
+                                  </h6>
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                  <a href="/sub/{{ pro.id }}" class="btn">
+                                    <i class="fas fa-minus"></i>
+                                  </a>
+                                  <div class="form-outline">
+                                    <label for="x" class="form-label">
+                                      Quantité
+                                    </label>
+                                    <input id="x" value="{{ pro.quantite }}"></div>
+                                    <a href="/add/{{ pro.id }}" class="btn">
+                                      <i class="fas fa-plus"></i>
+                                    </a>
+                                  </div>
+                                  <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                    <h6 class="mb-0">
+                                      {{ pro.PrixProduit * pro.quantite }}
+                                      €
+                                    </h6>
+                                  </div>
+                                  <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                    <a href="#!" class="text-muted">
+                                      <i class="fas fa-times"></i>
+                                    </a>
+                                  </div>
+                                </div>
+                                <hr class="my-4">
+                                {% endfor %}
+                                <div class="pt-5">
+                                  <h6 class="mb-0">
+                                    <a href="/" class="text-body">
+                                      <i class="fas fa-long-arrow-alt-left me-2"></i>
+                                      Back to shop
+                                    </a>
+                                  </h6>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4 bg-grey">
+                              <div class="p-5">
+                                <h3 class="fw-bold mb-5 mt-2 pt-1">
+                                  Prix
+                                </h3>
+                                <hr class="my-4">
+                                  <div class="d-flex justify-content-between mb-4">
+                                    <h5 class="text-uppercase">
+                                      Produit 
+                                    </h5>
+                                    <h5>
+                                      {{ total }}
+                                    </h5>
+                                  </div>
+                                  <h5 class="text-uppercase mb-3">
+                                    Code promo
+                                  </h5>
+                                  <div class="mb-5">
+                                    <div class="form-outline">
+                                      <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
+                                      <label class="form-label" for="form3Examplea2">
+                                        Entrez votre code
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <hr class="my-4">
+                                    <div class="d-flex justify-content-between mb-5">
+                                      <h5 class="text-uppercase">
+                                        Prix TTC : 
+                                      </h5>
+                                      <h5>
+                                        {{ prixTtc }}
+                                        €  
+                                      </h5>
+                                    </div>
+                                    <a href="/commande" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">
+                                      Payez
+                                    </a>
+                                    <a href="/clear" class="btn btn-danger mt-2">
+                                      Vider le panier
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </main>
+                  </div>
+                </section>
+              {% endblock %}
+              

@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %} 
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+<section class="h-100 h-custom" style="background-color: ;">
+<main>
+  <div class="divGauche">
+      <a href="/" class="" aria-current="false">
+        <span class=" btn  spanDivGauche">
+          <i class="fas fa-home"></i>
+          Acceuil
+                      
+        </span>
+      </a>
+      {% if app.user %}
+        <a href="/profile" class="">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-users fa-fw me-3"></i>
+            Votre profil
+                          
+          </span>
+        </a>
+        <a href="#" class="">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-chart-bar fa-fw me-3"></i>
+            Vos commandes
+                          
+          </span>
+        </a>
+      {% endif %}
+      {% if is_granted("ROLE_ADMIN") %}
+        <a href="/admin" class="">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-chart-bar fa-fw me-3"></i>
+            Votre pannel admin
+                          
+          </span>
+        </a>
+      {% endif %}
+      {% if is_granted("ROLE_FOURNISSEUR") %}
+        <a href="#">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-chart-bar fa-fw me-3"></i>
+            Votre pannel fournisseur
+                          
+          </span>
+        </a>
+      {% endif %}
+    </div>
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+            <h1 class="text-center">Inscription</h1>
+        {{ form_start(registrationForm) }}
+        <fieldset class="">
+            <legend>Mon identité</legend>
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.nom) }}
+            {{ form_row(registrationForm.prenom) }}
+            {{ form_row(registrationForm.dateNaissance) }}
+            {{ form_row(registrationForm.sexe) }}
+        </fieldset>
+        <fieldset class="">
+            <legend>Mes coordonées</legend>
+            {{ form_row(registrationForm.adresse1) }}
+            {{ form_row(registrationForm.adresse2) }}
+            {{ form_row(registrationForm.adresse3) }}
+            {{ form_row(registrationForm.ville) }}
+            {{ form_row(registrationForm.pays) }}
+            {{ form_row(registrationForm.codePostal) }}
+            {{ form_row(registrationForm.telephone) }}
+            {{ form_row(registrationForm.image) }}
+        </fieldset>
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+        {{ form_row(registrationForm.agreeTerms) }}
+
+        <button type="submit" class="btn btn-success my-3">M'inscrire</button>
+    {{ form_end(registrationForm) }}
+  </div>
+</div>
+</main>
+</section>
+{% endblock %}

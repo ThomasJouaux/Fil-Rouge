@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+{# {% block stylesheets %}
+  <link href="{{asset('../css/style.css')}}" rel="stylesheet">
+  {% endblock %} #}
+{% block body %}
+  {# breadcrump #}
+  <!--BAR A GAUCHE-->
+    <main class=""> <div class="divGauche">
+      <a href="/" class="" aria-current="false">
+        <span class=" btn  spanDivGauche">
+          <i class="fas fa-home"></i>
+          Acceuil
+                      
+        </span>
+      </a>
+      {% if app.user %}
+        <a href="/profile" class="">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-users fa-fw me-3"></i>
+            Votre profil
+                          
+          </span>
+        </a>
+        <a href="#" class="">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-chart-bar fa-fw me-3"></i>
+            Vos commandes
+                          
+          </span>
+        </a>
+      {% else %}
+        <a href="/login">
+          <span class="btn btn-success mt-4 col-8">
+        <i class="fas fa-plug"></i>
+            Connexion
+                        
+          </span>
+        </a>
+      </br>
+        <a href="/inscription">
+          Vous n'avez pas de compte ? Inscrivez vous 
+        </a>
+      {% endif %}
+      {% if is_granted("ROLE_ADMIN") %}
+        <a href="/admin" class="">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-chart-bar fa-fw me-3"></i>
+            Votre pannel admin
+                          
+          </span>
+        </a>
+      {% endif %}
+      {% if is_granted("ROLE_FOURNISSEUR") %}
+        <a href="#">
+          <span class="btn spanDivGauche">
+            <i class="fas fa-chart-bar fa-fw me-3"></i>
+            Votre pannel fournisseur
+                          
+          </span>
+        </a>
+      {% endif %}
+    </div>
+    <div class="container">
+      <h4 class="text-center mt-4">
+        Qui sommes nous ? 
+              
+      </h4>
+      <p class="text-center mb-4">
+        Exercitation aliquip reprehenderit ea consectetur reprehenderit sit aute Lorem culpa labore laborum minim ullamco pariatur. Mollit sunt velit proident est nisi cupidatat. Eiusmod sint deserunt culpa sit do cillum reprehenderit commodo. Laboris Lorem enim officia mollit in consectetur amet nulla. Consequat tempor dolore amet qui. Consequat officia culpa ex in proident minim est ex non esse incididunt. Reprehenderit est amet occaecat commodo ut nulla.
+              
+      </p>
+      <!--Section: Content-->
+      <section class="text-center text-md-start">
+        <h4 class="mb-2">
+          <strong>
+            Categories :
+                      
+          </strong>
+        </h4>
+        <div class="row ">
+          {% for categorie in categories %}
+            <div class="card col-3">
+              <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                <img src="{{ categorie.categorieImg }}" class="img-fluid imgCategorie" />
+                <a href="#!">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </a>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">
+                  {{ categorie.categorieNom }}
+                </h5>
+                <p class="card-text">
+                  {{ categorie.categorieType }}
+                </p>
+                <a href="/categorie/{{ categorie.id }}" class="btn btn-primary">
+                  Y acceder 
+                                  
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <hr class="mt-4">
+          <!-- Post -->
+          <h4 class="mb-4">
+            <strong>
+              Nos produits du moments :
+                          
+            </strong>
+          </h4>
+          <div class="row">
+            {% for pro in produit|slice(0,4) %}
+              <div class="card col-3 cardProduitMoment ml-2">
+                <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                  <img src="{{ pro.imgProduit }}" class="img-fluid imgProduit" />
+                  <a href="#!">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">
+                    {{ pro.nomProduit }}
+                  </h5>
+                  <p class="card-text">
+                    {{ pro.typeProduit }}
+                  </p>
+                  <a href="/produits/{{ pro.id }}" class="btn btn-primary">
+                    Button
+                                      
+                  </a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        <!--Section: Content-->
+        {% endblock %}
+        
