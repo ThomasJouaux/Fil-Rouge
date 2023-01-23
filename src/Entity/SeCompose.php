@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SeComposeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SeComposeRepository::class)]
@@ -23,6 +25,14 @@ class SeCompose
     #[ORM\ManyToOne(inversedBy: 'seComposes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Commande $commande = null;
+
+    #[ORM\OneToMany(mappedBy: 'SeCompose', targetEntity: AdresseLivraison::class)]
+    private Collection $adresseLivraisons;
+
+    public function __construct()
+    {
+        $this->adresseLivraisons = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -61,6 +71,36 @@ class SeCompose
     public function setCommande(?Commande $commande): self
     {
         $this->commande = $commande;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AdresseLivraison>
+     */
+    public function getAdresseLivraisons(): Collection
+    {
+        return $this->adresseLivraisons;
+    }
+
+    public function addAdresseLivraison(AdresseLivraison $adresseLivraison): self
+    {
+        if (!$this->adresseLivraisons->contains($adresseLivraison)) {
+            $this->adresseLivraisons->add($adresseLivraison);
+            $adresseLivraison->setSeCompose($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdresseLivraison(AdresseLivraison $adresseLivraison): self
+    {
+        if ($this->adresseLivraisons->removeElement($adresseLivraison)) {
+            // set the owning side to null (unless already changed)
+            if ($adresseLivraison->getSeCompose() === $this) {
+                $adresseLivraison->setSeCompose(null);
+            }
+        }
 
         return $this;
     }

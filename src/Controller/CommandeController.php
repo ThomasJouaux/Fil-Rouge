@@ -45,23 +45,24 @@ class CommandeController extends AbstractController
     }
 
     #[IsGranted("ROLE_USER")]
-    #[Route('/commandeDetail/{id}', name: 'app_commandeDetail')]
-    public function commandeDetail($id , ManagerRegistry $manager): Response
+    #[Route('/commandeDetail/', name: 'app_commandeDetail')]
+    public function commandeDetail(ManagerRegistry $manager): Response
     {
         $user = $this->getUser();
-        $commande = $manager->getRepository(Commande::class)->findByUser($user);
+        $commandes = $manager->getRepository(Commande::class)->findByUser($user);
 
-        if (!$commande) {
+
+        if (!$commandes) {
             throw $this->createNotFoundException(
                 'Aucune commande trouvée pour cet id : '.$user->getUserIdentifier()
             );
         }
-        $produits = $manager->getRepository(SeCompose::class)->findBy(["commande" => $commande]);
+        //$produits = $manager->getRepository(SeCompose::class)->findBy(["commande" => $commande]);
        
 
         return $this->render('commande/index.html.twig', [
-            'commande' => $commande, 
-            'produits' => $produits
+            'commandes' => $commandes, 
+            //'produits' => $produits
         ]);
     }
 }

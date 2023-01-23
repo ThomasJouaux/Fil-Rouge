@@ -1,213 +1,268 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-  Hello 
-  {{ app.user.nom }}
-  {{ app.user.prenom }}
+	Hello
+	{{ app.user.nom }}
+	{{ app.user.prenom }}
 {% endblock %}
 {% block body %}
-  {# body #}
-  <section class="h-100 h-custom" style="background-color: ;">
-    <main>
-      <div class="divGauche">
-      <a href="/" class="" aria-current="false">
-        <span class=" btn  spanDivGauche">
-          <i class="fas fa-home"></i>
-          Acceuil
-                      
-        </span>
-      </a>
-      {% if app.user %}
-        <a href="/profile" class="">
-          <span class="btn spanDivGauche">
-            <i class="fas fa-users fa-fw me-3"></i>
-            Votre profil
-                          
-          </span>
-        </a>
-        <a href="#" class="">
-          <span class="btn spanDivGauche">
-            <i class="fas fa-chart-bar fa-fw me-3"></i>
-            Vos commandes
-                          
-          </span>
-        </a>
-      {% else %}
-        <a href="/login">
-          <span class="btn btn-success mt-4 col-8">
-        <i class="fas fa-plug"></i>
-            Connexion
-                        
-          </span>
-        </a>
-      </br>
-        <a href="/inscription">
-          Vous n'avez pas de compte ? Inscrivez vous 
-        </a>
-      {% endif %}
-      {% if is_granted("ROLE_ADMIN") %}
-        <a href="/admin" class="">
-          <span class="btn spanDivGauche">
-            <i class="fas fa-chart-bar fa-fw me-3"></i>
-            Votre pannel admin
-                          
-          </span>
-        </a>
-      {% endif %}
-      {% if is_granted("ROLE_FOURNISSEUR") %}
-        <a href="#">
-          <span class="btn spanDivGauche">
-            <i class="fas fa-chart-bar fa-fw me-3"></i>
-            Votre pannel fournisseur
-                          
-          </span>
-        </a>
-      {% endif %}
-    </div>
-      <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          {# BreadCrump #}
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page">
-                <a href="/">
-                  Acceuil
-                </a>
-              </li>
-              <li class="breadcrumb-item">
-                Profil
-              </a>
-            </li>
-          </ol>
-        </nav>
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="card mb-4">
-              <div class="card-body text-center">
-                <img src="{{ app.user.image }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-                  <h5 class="my-3">
-                    {{ app.user.nom }}
-                  </h5>
-                  <p class="text-muted mb-1">
-                    {{ app.user.prenom }}
-                  </p>
-                  <p class="text-muted mb-1">
-                    {% set now = "now"|date("Y-m-d") %}
-                    {% set dateNaissance = app.user.dateNaissance|date('Y-m-d') %}
-                    {% set diff = date(dateNaissance).diff(date(now)) %}
-                    {% set age = diff.y %}
-                    {{ age }}
-                    ans.
-                  </p>
-                </div>
-              </div>
-              <div class="card mb-4 mb-lg-0">
-                <div class="card-body p-0">
-                  <ul class="list-group list-group-flush rounded-3">
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <i class="fas fa-globe fa-lg text-warning"></i>
-                      <a href="/commandeDetail/{id}" class="btn btn-success">
-                        Mes commandes ( 
-                        {{ app.user.commandes|length }}
-                        )
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-8">
-              <div class="card mb-4">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <p class="mb-0">
-                        Full Name
-                      </p>
-                    </div>
-                    <div class="col-sm-9">
-                      <p class="text-muted mb-0">
-                        {{ app.user.nom }}
-                        {{ app.user.prenom }}
-                      </p>
-                    </div>
-                  </div>
-                  <hr>
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <p class="mb-0">
-                          Email
-                        </p>
-                      </div>
-                      <div class="col-sm-9">
-                        <p class="text-muted mb-0">
-                          {{ app.user.email }}
-                        </p>
-                      </div>
-                    </div>
-                    <hr>
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <p class="mb-0">
-                            telephone
-                          </p>
-                        </div>
-                        <div class="col-sm-9">
-                          <p class="text-muted mb-0">
-                            {{ app.user.telephone }}
-                          </p>
-                        </div>
-                      </div>
-                      <hr>
-                        <div class="row">
-                          <div class="col-sm-3">
-                            <p class="mb-0">
-                              Address 1
-                            </p>
-                          </div>
-                          <div class="col-sm-9">
-                            <p class="text-muted mb-0">
-                              {{ app.user.adresse1 }}
-                            </p>
-                          </div>
-                        </div>
-                        <hr>
-                          <div class="row">
-                            <div class="col-sm-3">
-                              <p class="mb-0">
-                                Address 2
-                              </p>
-                            </div>
-                            <div class="col-sm-9">
-                              <p class="text-muted mb-0">
-                                {{ app.user.adresse2 }}
-                              </p>
-                            </div>
-                          </div>
-                          <hr>
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <p class="mb-0">
-                                  Address 3
-                                </p>
-                              </div>
-                              <div class="col-sm-9">
-                                <p class="text-muted mb-0">
-                                  {{ app.user.adresse3 }}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <a href="/edit/{user}" class="btn btn-success">
-                            Modifiez
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              </div>
-            </div>
-          </main>
-        </section>
-      {% endblock %}
-      
+	{# body #}
+	<section class="h-100 h-custom" style="background-color: ;">
+		<main>
+			<div class="divGauche">
+				<a href="/" class="" aria-current="false">
+					<span class=" btn  spanDivGauche">
+						<i class="fas fa-home"></i>
+						Acceuil
+
+					</span>
+				</a>
+				{% if app.user %}
+					<a href="/profile" class="">
+						<span class="btn spanDivGauche">
+							<i class="fas fa-users fa-fw me-3"></i>
+							Votre profil
+
+						</span>
+					</a>
+					<a href="#" class="">
+						<span class="btn spanDivGauche">
+							<i class="fas fa-chart-bar fa-fw me-3"></i>
+							Vos commandes
+
+						</span>
+					</a>
+				{% else %}
+					<a href="/login">
+						<span class="btn btn-success mt-4 col-8">
+							<i class="fas fa-plug"></i>
+							Connexion
+
+						</span>
+					</a>
+				</br>
+				<a href="/inscription">
+					Vous n'avez pas de compte ? Inscrivez vous
+				</a>
+			{% endif %}
+			{% if is_granted("ROLE_ADMIN") %}
+				<a href="/admin" class="">
+					<span class="btn spanDivGauche">
+						<i class="fas fa-chart-bar fa-fw me-3"></i>
+						Votre pannel admin
+
+					</span>
+				</a>
+			{% endif %}
+			{% if is_granted("ROLE_FOURNISSEUR") %}
+				<a href="#">
+					<span class="btn spanDivGauche">
+						<i class="fas fa-chart-bar fa-fw me-3"></i>
+						Votre pannel fournisseur
+
+					</span>
+				</a>
+			{% endif %}
+		</div>
+		<div class="container py-5 h-100">
+			<div
+				class="row d-flex justify-content-center align-items-center h-100">
+				{# BreadCrump #}
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active" aria-current="page">
+							<a href="/">
+								Acceuil
+							</a>
+						</li>
+						<li class="breadcrumb-item">Profil
+						</li>
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="card mb-4">
+					<div class="card-body text-center">
+						<img src="{{ app.user.image }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+						<h5 class="my-3">
+							{{ app.user.nom }}
+						</h5>
+						<p class="text-muted mb-1">
+							{{ app.user.prenom }}
+						</p>
+						<p class="text-muted mb-1">
+							{% set now = "now"|date("Y-m-d") %}
+							{% set dateNaissance = app.user.dateNaissance|date('Y-m-d') %}
+							{% set diff = date(dateNaissance).diff(date(now)) %}
+							{% set age = diff.y %}
+							{{ age }}
+							ans.
+						</p>
+					</div>
+				</div>
+				<div class="card mb-4 mb-lg-0">
+					<div class="card-body p-0">
+						<ul class="list-group list-group-flush rounded-3">
+							<li class="list-group-item d-flex justify-content-between align-items-center p-3">
+								<i class="fas fa-globe fa-lg text-warning"></i>
+								<a href="/commandeDetail/" class="btn btn-success">
+									Mes commandes (
+									{{ app.user.commandes|length }}
+									)
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-8">
+				<div class="card mb-4">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-3">
+								<p class="mb-0">
+									Full Name
+								</p>
+							</div>
+							<div class="col-sm-9">
+								<p class="text-muted mb-0">
+									{{ app.user.nom }}
+									{{ app.user.prenom }}
+								</p>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<p class="mb-0">
+									Email
+								</p>
+							</div>
+							<div class="col-sm-9">
+								<p class="text-muted mb-0">
+									{{ app.user.email }}
+								</p>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<p class="mb-0">
+									telephone
+								</p>
+							</div>
+							<div class="col-sm-9">
+								<p class="text-muted mb-0">
+									{{ app.user.telephone }}
+								</p>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<p class="mb-0">
+									Address 1
+								</p>
+							</div>
+							<div class="col-sm-9">
+								<p class="text-muted mb-0">
+									{{ app.user.adresse1 }}
+								</p>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<p class="mb-0">
+									Address 2
+								</p>
+							</div>
+							<div class="col-sm-9">
+								<p class="text-muted mb-0">
+									{{ app.user.adresse2 }}
+								</p>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<p class="mb-0">
+									Address 3
+								</p>
+							</div>
+							<div class="col-sm-9">
+								<p class="text-muted mb-0">
+									{{ app.user.adresse3 }}
+								</p>
+							</div>
+						</div>
+					</div>
+					<a href="/edit/{user}" class="btn btn-success">
+						Modifiez
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</h2 class="mb-4">Vos adresses de livraison : </h2>
+<div class="col-lg-8"><div class="card mb-4">
+<div class="card-body">
+	<div class="row">
+		<div class="col-sm-3">
+			<p class="mb-0">
+				Adresse
+			</p>
+		</div>
+		<div class="col-sm-9">
+			<p
+				class="text-muted mb-0">{# {{ app.user.email }} #}
+			</p>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-sm-3">
+			<p class="mb-0">
+				Ville
+			</p>
+		</div>
+		<div class="col-sm-9">
+			<p
+				class="text-muted mb-0">{# {{ app.user.telephone }} #}
+			</p>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-sm-3">
+			<p class="mb-0">
+				Pays
+			</p>
+		</div>
+		<div class="col-sm-9">
+			<p
+				class="text-muted mb-0">{# {{ app.user.adresse1 }} #}
+			</p>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-sm-3">
+			<p class="mb-0">
+				Code Postal
+			</p>
+		</div>
+		<div class="col-sm-9">
+			<p
+				class="text-muted mb-0">{# {{ app.user.adresse2 }} #}
+			</p>
+		</div>
+	</div>
+	
+</div>
+<a href="/adresseLivraison" class="btn btn-success">
+	Modifiez
+</a></div></div>
+</section></div></div></div></div></section></div></div></main></section> {% endblock %}

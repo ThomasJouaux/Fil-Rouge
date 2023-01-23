@@ -20,7 +20,7 @@ class CommandeRepository extends ServiceEntityRepository
     
    
 
-    public function findByUser(User $user): ?Commande
+    public function findByUser(User $user)
     {
         return $this->em->createQueryBuilder('c')
             ->select('c')
@@ -28,6 +28,6 @@ class CommandeRepository extends ServiceEntityRepository
             ->andWhere('c.user = :user')
             ->setParameter('user', $user)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 }

@@ -3,14 +3,48 @@
 {% block title %}Hello CommandeController!{% endblock %}
 
 {% block body %}
-<h2>Commande numéro : {{ commande.id }}</h2>
+{# <h2>Commande numéro : {{ commande.id }}</h2>
 <p>Date de commande: {{ commande.dateCommande|date }}</p>
-<p>Utilisateur: {{ commande.user.username }}</p>
-
+<p>Utilisateur: {{ commande.user.username }}</p> #}
+{# 
 <h3>Produits de la commande</h3>
+<table class="table table-dark table-striped">
 <ul>
     {% for produit in produits %}
         <li>{{ produit.produit.nomProduit }} - Quantité: {{ produit.quantite }}</li>
     {% endfor %}
 </ul>
+</table> #}
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Numéro de commande</th>
+            <th>Nom</th>
+            <th>Produits</th>
+            <th>Quantités</th>
+        </tr>
+    </thead>
+    <tbody> 
+
+        {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.id }}</td>
+                <td>{{ commande.user.nom }} {{ commande.user.prenom }}</td>
+                <td>
+                    {% for sc in commande.seComposes %}
+                        {{ sc.produit.nomProduit }}<br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for sc in commande.seComposes %}
+                        {{ sc.quantite }}<br>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}
