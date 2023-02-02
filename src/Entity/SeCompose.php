@@ -26,9 +26,6 @@ class SeCompose
     #[ORM\JoinColumn(nullable: false)]
     private ?Commande $commande = null;
 
-    #[ORM\OneToMany(mappedBy: 'SeCompose', targetEntity: AdresseLivraison::class)]
-    private Collection $adresseLivraisons;
-
     public function __construct()
     {
         $this->adresseLivraisons = new ArrayCollection();
@@ -75,33 +72,4 @@ class SeCompose
         return $this;
     }
 
-    /**
-     * @return Collection<int, AdresseLivraison>
-     */
-    public function getAdresseLivraisons(): Collection
-    {
-        return $this->adresseLivraisons;
-    }
-
-    public function addAdresseLivraison(AdresseLivraison $adresseLivraison): self
-    {
-        if (!$this->adresseLivraisons->contains($adresseLivraison)) {
-            $this->adresseLivraisons->add($adresseLivraison);
-            $adresseLivraison->setSeCompose($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAdresseLivraison(AdresseLivraison $adresseLivraison): self
-    {
-        if ($this->adresseLivraisons->removeElement($adresseLivraison)) {
-            // set the owning side to null (unless already changed)
-            if ($adresseLivraison->getSeCompose() === $this) {
-                $adresseLivraison->setSeCompose(null);
-            }
-        }
-
-        return $this;
-    }
 }

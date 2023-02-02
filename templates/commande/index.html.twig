@@ -17,7 +17,7 @@
 </table> #}
 
 
-<table>
+<table class="table table-light-emphasis table-striped">
     <thead>
         <tr>
             <th>Numéro de commande</th>
@@ -30,8 +30,8 @@
 
         {% for commande in commandes %}
             <tr>
-                <td>{{ commande.id }}</td>
-                <td>{{ commande.user.nom }} {{ commande.user.prenom }}</td>
+                <td >{{ commande.id }}</td>
+                <td >{{ commande.user.nom }} {{ commande.user.prenom }}</td>
                 <td>
                     {% for sc in commande.seComposes %}
                         {{ sc.produit.nomProduit }}<br>

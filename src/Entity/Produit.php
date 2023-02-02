@@ -50,10 +50,14 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: SeCompose::class)]
     private Collection $seComposes;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: LivraisonProduit::class)]
+    private Collection $livraisonProduits;
+
 
     public function __construct()
     {
         $this->seComposes = new ArrayCollection();
+        $this->livraisonProduits = new ArrayCollection();
     }
 
 
@@ -210,6 +214,36 @@ class Produit
             // set the owning side to null (unless already changed)
             if ($seCompose->getProduit() === $this) {
                 $seCompose->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LivraisonProduit>
+     */
+    public function getLivraisonProduits(): Collection
+    {
+        return $this->livraisonProduits;
+    }
+
+    public function addLivraisonProduit(LivraisonProduit $livraisonProduit): self
+    {
+        if (!$this->livraisonProduits->contains($livraisonProduit)) {
+            $this->livraisonProduits->add($livraisonProduit);
+            $livraisonProduit->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLivraisonProduit(LivraisonProduit $livraisonProduit): self
+    {
+        if ($this->livraisonProduits->removeElement($livraisonProduit)) {
+            // set the owning side to null (unless already changed)
+            if ($livraisonProduit->getProduit() === $this) {
+                $livraisonProduit->setProduit(null);
             }
         }
 
